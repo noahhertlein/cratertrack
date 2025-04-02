@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraterTrack - SMS Campaign CRM</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <!-- Favicon placeholder -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌋</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header bg-dark">
+                        <h1 class="text-center">CraterTrack <small class="text-muted">SMS CRM</small></h1>
+                    </div>
+                    <div class="card-body">
+                        <h2>Welcome to CraterTrack</h2>
+                        <p>A lightweight CRM system for managing SMS campaigns at <strong>cratertrack.com</strong></p>
+                        <div id="status-check" class="alert alert-info">
+                            Checking API status...
+                        </div>
+                        <button id="check-api" class="btn btn-primary mb-4">Check API Status</button>
+                        
+                        <div class="row">
+                            <!-- Add Lead Form -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>Add New Lead</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="lead-form">
+                                            <!-- Owner Information Section -->
+                                            <h5 class="mt-2 mb-3">Owner Information</h5>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="owner1-first-name" class="form-label">Owner 1 First Name</label>
+                                                        <input type="text" class="form-control" id="owner1-first-name" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="owner1-last-name" class="form-label">Owner 1 Last Name</label>
+                                                        <input type="text" class="form-control" id="owner1-last-name" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="owner2-first-name" class="form-label">Owner 2 First Name</label>
+                                                        <input type="text" class="form-control" id="owner2-first-name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="owner2-last-name" class="form-label">Owner 2 Last Name</label>
+                                                        <input type="text" class="form-control" id="owner2-last-name">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Contact Information Section -->
+                                            <h5 class="mt-4 mb-3">Contact Information</h5>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" required>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="phone1" class="form-label">Primary Phone</label>
+                                                <input type="tel" class="form-control" id="phone1" required>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="phone2" class="form-label">Secondary Phone</label>
+                                                <input type="tel" class="form-control" id="phone2">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="phone3" class="form-label">Third Phone</label>
+                                                <input type="tel" class="form-control" id="phone3">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="phone4" class="form-label">Fourth Phone</label>
+                                                <input type="tel" class="form-control" id="phone4">
+                                            </div>
+                                            
+                                            <!-- Address Information Section -->
+                                            <h5 class="mt-4 mb-3">Address Information</h5>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="city" class="form-label">City</label>
+                                                        <input type="text" class="form-control" id="city">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="state" class="form-label">State</label>
+                                                        <input type="text" class="form-control" id="state">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="zip-code" class="form-label">ZIP Code</label>
+                                                        <input type="text" class="form-control" id="zip-code">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Additional Information Section -->
+                                            <h5 class="mt-4 mb-3">Additional Information</h5>
+                                            <div class="mb-3">
+                                                <label for="developer-name" class="form-label">Developer Name</label>
+                                                <input type="text" class="form-control" id="developer-name">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="purchase-date" class="form-label">Purchase/Upgrade Date</label>
+                                                <input type="date" class="form-control" id="purchase-date">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="deed-type" class="form-label">Deed Type</label>
+                                                <input type="text" class="form-control" id="deed-type">
+                                            </div>
+                                            
+                                            <!-- Status Section -->
+                                            <h5 class="mt-4 mb-3">Status</h5>
+                                            <div class="mb-3">
+                                                <label for="status" class="form-label">Lead Status</label>
+                                                <select class="form-select" id="status">
+                                                    <option value="NEW" selected>NEW</option>
+                                                    <option value="SENT">SENT</option>
+                                                    <option value="REPLIED">REPLIED</option>
+                                                    <option value="BOOKED">BOOKED</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-success">Add Lead</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Lead List -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h3>Leads</h3>
+                                        <button id="refresh-leads" class="btn btn-secondary btn-sm">Refresh</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="filter-status" class="form-label">Filter by Status</label>
+                                            <select class="form-select" id="filter-status">
+                                                <option value="" selected>All</option>
+                                                <option value="NEW">NEW</option>
+                                                <option value="SENT">SENT</option>
+                                                <option value="REPLIED">REPLIED</option>
+                                                <option value="BOOKED">BOOKED</option>
+                                            </select>
+                                        </div>
+                                        <div id="leads-container" class="list-group">
+                                            <div class="text-center py-3 text-muted">
+                                                No leads found. Click "Refresh" to load leads.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Notes Modal -->
+                        <div class="modal fade" id="notes-modal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add Note</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="note-form">
+                                            <input type="hidden" id="lead-id">
+                                            <div class="mb-3">
+                                                <label for="note-content" class="form-label">Note</label>
+                                                <textarea class="form-control" id="note-content" rows="3" required></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Add Note</button>
+                                        </form>
+                                        <hr>
+                                        <h6>Previous Notes</h6>
+                                        <div id="notes-container" class="list-group">
+                                            <div class="text-center py-2 text-muted">No notes found.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Health check
+        document.getElementById('check-api').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                document.getElementById('status-check').textContent = 'API Status: ' + data.status;
+                document.getElementById('status-check').className = 'alert alert-success';
+            } catch (error) {
+                document.getElementById('status-check').textContent = 'API Error: ' + error.message;
+                document.getElementById('status-check').className = 'alert alert-danger';
+            }
+        });
+        
+        // Global variables
+        let notesModal;
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Bootstrap modal
+            notesModal = new bootstrap.Modal(document.getElementById('notes-modal'));
+            
+            // Load leads on page load
+            loadLeads();
+            
+            // Set up event listeners
+            document.getElementById('lead-form').addEventListener('submit', handleLeadSubmit);
+            document.getElementById('refresh-leads').addEventListener('click', loadLeads);
+            document.getElementById('filter-status').addEventListener('change', loadLeads);
+            document.getElementById('note-form').addEventListener('submit', handleNoteSubmit);
+        });
+        
+        // Load leads from API
+        async function loadLeads() {
+            try {
+                const statusFilter = document.getElementById('filter-status').value;
+                const url = statusFilter ? `/leads?status=${statusFilter}` : '/leads';
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                displayLeads(data.leads || []);
+            } catch (error) {
+                console.error('Error loading leads:', error);
+                alert('Failed to load leads. Please try again.');
+            }
+        }
+        
+        // Display leads in the UI
+        function displayLeads(leads) {
+            const container = document.getElementById('leads-container');
+            
+            if (leads.length === 0) {
+                container.innerHTML = '<div class="text-center py-3 text-muted">No leads found.</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            leads.forEach(lead => {
+                const leadElement = document.createElement('div');
+                leadElement.className = 'list-group-item d-flex justify-content-between align-items-center mb-2';
+                
+                // Determine badge color based on status
+                let badgeClass = 'bg-secondary';
+                switch(lead.status) {
+                    case 'NEW': badgeClass = 'bg-primary'; break;
+                    case 'SENT': badgeClass = 'bg-info'; break;
+                    case 'REPLIED': badgeClass = 'bg-warning'; break;
+                    case 'BOOKED': badgeClass = 'bg-success'; break;
+                }
+                
+                // Format owner names
+                const owner1Name = lead.owner1_full_name || `${lead.owner1_first_name} ${lead.owner1_last_name}`;
+                const owner2Name = lead.owner2_full_name || (lead.owner2_first_name && lead.owner2_last_name ? 
+                                  `${lead.owner2_first_name} ${lead.owner2_last_name}` : '');
+                
+                // Location information
+                const location = [lead.city, lead.state, lead.zip_code].filter(Boolean).join(', ');
+                
+                // Additional information
+                const additionalInfo = [
+                    lead.developer_name ? `Developer: ${lead.developer_name}` : '',
+                    lead.purchase_date ? `Purchase Date: ${new Date(lead.purchase_date).toLocaleDateString()}` : '',
+                    lead.deed_type ? `Deed Type: ${lead.deed_type}` : ''
+                ].filter(Boolean);
+                
+                // Phone numbers
+                const phones = [lead.phone1, lead.phone2, lead.phone3, lead.phone4].filter(Boolean);
+                
+                leadElement.innerHTML = `
+                    <div class="lead-details">
+                        <h5>${owner1Name}</h5>
+                        ${owner2Name ? `<h6 class="mb-2">Co-owner: ${owner2Name}</h6>` : ''}
+                        
+                        <!-- Phone numbers with click-to-call -->
+                        <div class="mb-2">
+                            ${phones.map((phone, index) => `
+                                <p class="mb-1">
+                                    <a href="tel:${phone}" class="text-decoration-none">
+                                        <i class="bi bi-telephone"></i> ${phone} ${index === 0 ? '(Primary)' : ''}
+                                    </a>
+                                </p>
+                            `).join('')}
+                        </div>
+                        
+                        <p class="mb-1">${lead.email}</p>
+                        
+                        ${location ? `<p class="mb-1 small text-muted">${location}</p>` : ''}
+                        
+                        ${additionalInfo.length > 0 ? 
+                            `<div class="mt-2 small">
+                                ${additionalInfo.map(info => `<p class="mb-1 text-muted">${info}</p>`).join('')}
+                            </div>` 
+                        : ''}
+                        
+                        <span class="badge ${badgeClass} mt-2">${lead.status}</span>
+                    </div>
+                    <div class="btn-group-vertical">
+                        <button class="btn btn-sm btn-outline-primary mb-1 note-btn" data-lead-id="${lead.id}">
+                            Notes (${lead.notes ? lead.notes.length : 0})
+                        </button>
+                        <select class="form-select form-select-sm status-select" data-lead-id="${lead.id}">
+                            <option value="NEW" ${lead.status === 'NEW' ? 'selected' : ''}>NEW</option>
+                            <option value="SENT" ${lead.status === 'SENT' ? 'selected' : ''}>SENT</option>
+                            <option value="REPLIED" ${lead.status === 'REPLIED' ? 'selected' : ''}>REPLIED</option>
+                            <option value="BOOKED" ${lead.status === 'BOOKED' ? 'selected' : ''}>BOOKED</option>
+                        </select>
+                    </div>
+                `;
+                
+                container.appendChild(leadElement);
+                
+                // Set up event listeners for the newly created elements
+                const noteBtn = leadElement.querySelector('.note-btn');
+                noteBtn.addEventListener('click', () => openNotesModal(lead));
+                
+                const statusSelect = leadElement.querySelector('.status-select');
+                statusSelect.addEventListener('change', () => updateLeadStatus(lead.id, statusSelect.value));
+            });
+        }
+        
+        // Handle form submission for new lead
+        async function handleLeadSubmit(event) {
+            event.preventDefault();
+            
+            const leadData = {
+                // Owner information
+                owner1_first_name: document.getElementById('owner1-first-name').value,
+                owner1_last_name: document.getElementById('owner1-last-name').value,
+                owner2_first_name: document.getElementById('owner2-first-name').value,
+                owner2_last_name: document.getElementById('owner2-last-name').value,
+                
+                // Contact information
+                email: document.getElementById('email').value,
+                phone1: document.getElementById('phone1').value,
+                phone2: document.getElementById('phone2').value,
+                phone3: document.getElementById('phone3').value,
+                phone4: document.getElementById('phone4').value,
+                
+                // Address information
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zip_code: document.getElementById('zip-code').value,
+                
+                // Additional information
+                developer_name: document.getElementById('developer-name').value,
+                purchase_date: document.getElementById('purchase-date').value,
+                deed_type: document.getElementById('deed-type').value,
+                
+                // Status
+                status: document.getElementById('status').value
+            };
+            
+            try {
+                const response = await fetch('/leads', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(leadData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Clear form and reload leads
+                    document.getElementById('lead-form').reset();
+                    loadLeads();
+                    alert('Lead added successfully!');
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to add lead'));
+                }
+            } catch (error) {
+                console.error('Error adding lead:', error);
+                alert('Failed to add lead. Please try again.');
+            }
+        }
+        
+        // Update lead status
+        async function updateLeadStatus(leadId, newStatus) {
+            try {
+                const response = await fetch(`/leads/${leadId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Reload leads to reflect the update
+                    loadLeads();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to update lead status'));
+                }
+            } catch (error) {
+                console.error('Error updating lead status:', error);
+                alert('Failed to update lead status. Please try again.');
+            }
+        }
+        
+        // Open notes modal for a lead
+        function openNotesModal(lead) {
+            document.getElementById('lead-id').value = lead.id;
+            
+            // Display existing notes
+            const notesContainer = document.getElementById('notes-container');
+            
+            if (!lead.notes || lead.notes.length === 0) {
+                notesContainer.innerHTML = '<div class="text-center py-2 text-muted">No notes found.</div>';
+            } else {
+                notesContainer.innerHTML = '';
+                
+                lead.notes.forEach(note => {
+                    const noteElement = document.createElement('div');
+                    noteElement.className = 'list-group-item';
+                    
+                    // Format date for display
+                    const date = new Date(note.created_at);
+                    const formattedDate = date.toLocaleString();
+                    
+                    noteElement.innerHTML = `
+                        <p class="mb-1">${note.content}</p>
+                        <small class="text-muted">${formattedDate}</small>
+                    `;
+                    
+                    notesContainer.appendChild(noteElement);
+                });
+            }
+            
+            // Show the modal
+            notesModal.show();
+        }
+        
+        // Handle form submission for new note
+        async function handleNoteSubmit(event) {
+            event.preventDefault();
+            
+            const leadId = document.getElementById('lead-id').value;
+            const content = document.getElementById('note-content').value;
+            
+            try {
+                const response = await fetch(`/notes/${leadId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Clear form, hide modal, and reload leads
+                    document.getElementById('note-form').reset();
+                    notesModal.hide();
+                    loadLeads();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to add note'));
+                }
+            } catch (error) {
+                console.error('Error adding note:', error);
+                alert('Failed to add note. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>

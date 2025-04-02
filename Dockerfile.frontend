@@ -1,0 +1,24 @@
+FROM node:16-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY frontend/package.json frontend/package-lock.json* ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy the source code
+COPY frontend/ .
+
+# Build the app
+RUN npm run build
+
+# Install serve globally
+RUN npm install -g serve
+
+# Expose port
+EXPOSE 5000
+
+# Serve the build
+CMD ["serve", "-s", "build", "-l", "5000"]

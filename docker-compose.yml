@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  crm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - SESSION_SECRET=${SESSION_SECRET:-dev-secret-key}
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///crm.db}
+      - FLASK_ENV=production
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  # You can uncomment this section later when ready to use PostgreSQL
+  # database:
+  #   image: postgres:14-alpine
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_USER=${PGUSER}
+  #     - POSTGRES_PASSWORD=${PGPASSWORD}
+  #     - POSTGRES_DB=${PGDATABASE}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+
+# Uncomment this when ready to use PostgreSQL
+# volumes:
+#   postgres_data:
