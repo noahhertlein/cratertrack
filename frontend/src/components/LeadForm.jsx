@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 
 const LeadForm = ({ show, lead, onHide, onSubmit }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
+    first_name: '',
+    last_name: '',
     email: '',
+    phone_1: '',
+    phone_2: '',
+    phone_3: '',
+    phone_4: '',
+    address: '',
+    zip: '',
+    resort: '',
+    mortgaged: false,
     status: 'NEW'
   });
   
@@ -16,16 +24,32 @@ const LeadForm = ({ show, lead, onHide, onSubmit }) => {
   useEffect(() => {
     if (lead) {
       setFormData({
-        name: lead.name || '',
-        phone: lead.phone || '',
+        first_name: lead.first_name || '',
+        last_name: lead.last_name || '',
         email: lead.email || '',
+        phone_1: lead.phone_1 || '',
+        phone_2: lead.phone_2 || '',
+        phone_3: lead.phone_3 || '',
+        phone_4: lead.phone_4 || '',
+        address: lead.address || '',
+        zip: lead.zip || '',
+        resort: lead.resort || '',
+        mortgaged: lead.mortgaged || false,
         status: lead.status || 'NEW'
       });
     } else {
       setFormData({
-        name: '',
-        phone: '',
+        first_name: '',
+        last_name: '',
         email: '',
+        phone_1: '',
+        phone_2: '',
+        phone_3: '',
+        phone_4: '',
+        address: '',
+        zip: '',
+        resort: '',
+        mortgaged: false,
         status: 'NEW'
       });
     }
@@ -34,10 +58,10 @@ const LeadForm = ({ show, lead, onHide, onSubmit }) => {
   
   // Handle form input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     });
     
     // Clear error for this field
@@ -53,18 +77,39 @@ const LeadForm = ({ show, lead, onHide, onSubmit }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+    if (!formData.first_name.trim()) {
+      newErrors.first_name = 'First name is required';
     }
     
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone is required';
-    } else if (!/^[0-9+\- ()]{7,20}$/.test(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number';
+    if (!formData.last_name.trim()) {
+      newErrors.last_name = 'Last name is required';
+    }
+    
+    if (!formData.phone_1.trim()) {
+      newErrors.phone_1 = 'Primary phone is required';
+    } else if (!/^[0-9+\- ()]{7,20}$/.test(formData.phone_1)) {
+      newErrors.phone_1 = 'Please enter a valid phone number';
+    }
+    
+    // Validate additional phone numbers only if they're provided
+    if (formData.phone_2 && !/^[0-9+\- ()]{7,20}$/.test(formData.phone_2)) {
+      newErrors.phone_2 = 'Please enter a valid phone number';
+    }
+    
+    if (formData.phone_3 && !/^[0-9+\- ()]{7,20}$/.test(formData.phone_3)) {
+      newErrors.phone_3 = 'Please enter a valid phone number';
+    }
+    
+    if (formData.phone_4 && !/^[0-9+\- ()]{7,20}$/.test(formData.phone_4)) {
+      newErrors.phone_4 = 'Please enter a valid phone number';
     }
     
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (formData.zip && !/^\d{5}(-\d{4})?$/.test(formData.zip)) {
+      newErrors.zip = 'Please enter a valid ZIP code';
     }
     
     setErrors(newErrors);
@@ -101,40 +146,43 @@ const LeadForm = ({ show, lead, onHide, onSubmit }) => {
       
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
-          <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              isInvalid={!!errors.name}
-              disabled={isSubmitting}
-              placeholder="Enter full name"
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.name}
-            </Form.Control.Feedback>
-          </Form.Group>
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                  isInvalid={!!errors.first_name}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.first_name}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                  isInvalid={!!errors.last_name}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.last_name}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
           
           <Form.Group className="mb-3">
-            <Form.Label>Phone</Form.Label>
-            <Form.Control
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              isInvalid={!!errors.phone}
-              disabled={isSubmitting}
-              placeholder="Enter phone number"
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.phone}
-            </Form.Control.Feedback>
-          </Form.Group>
-          
-          <Form.Group className="mb-3">
-            <Form.Label>Email (optional)</Form.Label>
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
               name="email"
@@ -147,6 +195,148 @@ const LeadForm = ({ show, lead, onHide, onSubmit }) => {
             <Form.Control.Feedback type="invalid">
               {errors.email}
             </Form.Control.Feedback>
+          </Form.Group>
+          
+          <h5 className="mt-4 mb-3">Phone Numbers</h5>
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Primary Phone *</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone_1"
+                  value={formData.phone_1}
+                  onChange={handleChange}
+                  isInvalid={!!errors.phone_1}
+                  disabled={isSubmitting}
+                  placeholder="Primary phone number"
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.phone_1}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Secondary Phone</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone_2"
+                  value={formData.phone_2}
+                  onChange={handleChange}
+                  isInvalid={!!errors.phone_2}
+                  disabled={isSubmitting}
+                  placeholder="Secondary phone (optional)"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.phone_2}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
+          
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Additional Phone</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone_3"
+                  value={formData.phone_3}
+                  onChange={handleChange}
+                  isInvalid={!!errors.phone_3}
+                  disabled={isSubmitting}
+                  placeholder="Additional phone (optional)"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.phone_3}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Additional Phone</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone_4"
+                  value={formData.phone_4}
+                  onChange={handleChange}
+                  isInvalid={!!errors.phone_4}
+                  disabled={isSubmitting}
+                  placeholder="Additional phone (optional)"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.phone_4}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
+          
+          <h5 className="mt-4 mb-3">Property Information</h5>
+          <Form.Group className="mb-3">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              isInvalid={!!errors.address}
+              disabled={isSubmitting}
+              placeholder="Street address"
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.address}
+            </Form.Control.Feedback>
+          </Form.Group>
+          
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>ZIP Code</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="zip"
+                  value={formData.zip}
+                  onChange={handleChange}
+                  isInvalid={!!errors.zip}
+                  disabled={isSubmitting}
+                  placeholder="ZIP code"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.zip}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Resort</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="resort"
+                  value={formData.resort}
+                  onChange={handleChange}
+                  isInvalid={!!errors.resort}
+                  disabled={isSubmitting}
+                  placeholder="Resort name"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.resort}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
+          
+          <Form.Group className="mb-3">
+            <Form.Check
+              type="checkbox"
+              id="mortgaged"
+              name="mortgaged"
+              label="Property is mortgaged"
+              checked={formData.mortgaged}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
           </Form.Group>
           
           <Form.Group className="mb-3">
